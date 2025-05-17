@@ -1,0 +1,113 @@
+# Features
+The installer can be used to install project dependencies and handle venv setup for python projects. Libraries can be included by adding to lists in the script or by including a python and/or system dependencies file.
+- Customizable ASCII console display with logo compatibility.
+- ASCII color mode toggle.
+- Update system (debian-based linux) dependencies with a dependency file or array.
+- Create and update python3-venv dependencies with a dependency file or array.
+- Recieve a colorful realtime update of what is installing and any errors
+- Re-run to installall missing dependencies without attempting to re-install present ones.
+- 
+___
+
+# Usage
+There are two ways to install dependencies with the installation script. One can either make use of the dependency list variables, or can put dependency files in the script directory and enable usage of them.
+Both will report progress and importantly, both methods result in the same experience.
+### Using Dependency Lists
+
+
+# selecting option
+in order to select lists as your option for installation, make sure 'USE_CORE_TXT' for system dependencies and 'USE_PY_TXT' for python dependencies are both set to 0.
+example:
+USE_PY_TXT=0
+USE_CORE_TXT=0
+
+
+# customize the following for your needs
+CORE_DEP (dependencies for system here)
+CORE_CFG (commands for after installing system dependencies here)
+PY_DEP (python libraries to install into the venv here)
+PY_CFG (system commands to run after the python libraries are installed here)
+
+
+### USING DEPENDENCY FILES
+# ---------------------------------------------
+# selecting option
+in order to select files as your option for installation, make sure 'USE_CORE_TXT' for system dependencies and 'USE_PY_TXT' for python dependencies are both set to 1.
+example:
+USE_PY_TXT=1
+USE_CORE_TXT=1
+
+# making the dependency files
+CORE_TXT: the name of the file that stores system dependencies in the script directory
+PY_TXT: the name of the file that stores python dependencies in the script directory
+
+# adding dependencies
+in the 'CORE_TXT' and 'PY_TXT' files created previously, 
+
+# customize the following for your needs
+CORE_CFG (commands for after installing system dependencies here)
+PY_CFG (system commands to run after the python libraries are installed here)
+
+
+### EXAMPLES
+# ---------------------------------------------
+
+## install with dependency lists
+PROGRAM="fake program"
+VERSION="0.3"
+VENVNAME="fakepvenv"  # can be whatever you want
+FINAL_NOTE="Completed Installing, run with 'run.sh'"
+CLEAR_CONSOLE=1  # clear console when ran
+
+STARTUPGREETER=1  # if the greeter should be printed at launch
+USE_CORE_TXT=0  # if a requirements file should be used to install sytem dependencies
+CORE_TXT=""
+USE_PY_TXT=0  # if set to 1, will use a requirements.txt file to install python dependencies
+PY_TXT=""  # filename of the python requiremets 
+
+# system packages to by installed (apt-get/apt repo)
+CORE_DEP=("zenity", htop, 'neofetch') 
+# any commands that should be run directly after system package installs
+CORE_CFG=('mkdir config' 'touch config/fakeprogram.config')
+# python3 packages to be installed into the virtual environment
+PY_DEP=('pillow' 'bs4' 'requests')
+# any commands that should be run directly after pip installations
+PY_CFG=('mkdir pycache')
+
+## install with dependency files
+# ---------------------------------------------
+PROGRAM="fake program"
+VERSION="0.3"
+VENVNAME="fakepvenv"  # can be whatever you want
+FINAL_NOTE="Completed Installing, run with 'run.sh'"
+CLEAR_CONSOLE=1  # clear console when ran
+
+STARTUPGREETER=1  # if the greeter should be printed at launch
+USE_CORE_TXT=1  # if a requirements file should be used to install sytem dependencies
+CORE_TXT="linux-requirements.txt"
+USE_PY_TXT=1  # if set to 1, will use a requirements.txt file to install python dependencies
+PY_TXT="python3-requirements.txt"  # filename of the python requiremets (pip formatting)
+COLORFUL=1
+
+# system packages to by installed (apt-get/apt repo)
+CORE_DEP=()
+# any commands that should be run directly after system package installs
+CORE_CFG=('mkdir config' 'touch config/fakeprogram.config')
+# python3 packages to be installed into the virtual environment
+PY_DEP=()
+# any commands that should be run directly after pip installations
+PY_CFG=('mkdir pycache')
+
+# system dependency file
+zenity
+htop
+neofetch
+
+# python dependency file
+pillow
+bs4
+requests
+
+## author
+# ---------------------------------------------
+Caleb Tash
